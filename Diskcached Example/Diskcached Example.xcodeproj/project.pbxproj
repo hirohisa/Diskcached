@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65FCFB0018C45FDA00E1E8CD /* Diskcached.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FCFAFF18C45FDA00E1E8CD /* Diskcached.m */; };
 		A18C906918BAF4E100643B6D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A18C906818BAF4E100643B6D /* Foundation.framework */; };
 		A18C906B18BAF4E100643B6D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A18C906A18BAF4E100643B6D /* CoreGraphics.framework */; };
 		A18C906D18BAF4E100643B6D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A18C906C18BAF4E100643B6D /* UIKit.framework */; };
@@ -14,10 +15,11 @@
 		A18C907518BAF4E100643B6D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A18C907418BAF4E100643B6D /* main.m */; };
 		A18C907918BAF4E100643B6D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A18C907818BAF4E100643B6D /* AppDelegate.m */; };
 		A18C907B18BAF4E100643B6D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A18C907A18BAF4E100643B6D /* Images.xcassets */; };
-		A18C909A18BAF53500643B6D /* Diskcached.m in Sources */ = {isa = PBXBuildFile; fileRef = A18C909918BAF53500643B6D /* Diskcached.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		65FCFAFE18C45FDA00E1E8CD /* Diskcached.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Diskcached.h; sourceTree = "<group>"; };
+		65FCFAFF18C45FDA00E1E8CD /* Diskcached.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Diskcached.m; sourceTree = "<group>"; };
 		A18C906518BAF4E100643B6D /* Diskcached Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Diskcached Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A18C906818BAF4E100643B6D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A18C906A18BAF4E100643B6D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -30,8 +32,6 @@
 		A18C907818BAF4E100643B6D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		A18C907A18BAF4E100643B6D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A18C908118BAF4E100643B6D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		A18C909818BAF53500643B6D /* Diskcached.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Diskcached.h; sourceTree = "<group>"; };
-		A18C909918BAF53500643B6D /* Diskcached.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Diskcached.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,10 +48,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		65FCFAFD18C45FDA00E1E8CD /* Diskcached */ = {
+			isa = PBXGroup;
+			children = (
+				65FCFAFE18C45FDA00E1E8CD /* Diskcached.h */,
+				65FCFAFF18C45FDA00E1E8CD /* Diskcached.m */,
+			);
+			name = Diskcached;
+			path = ../Diskcached;
+			sourceTree = "<group>";
+		};
 		A18C905C18BAF4E100643B6D = {
 			isa = PBXGroup;
 			children = (
-				A18C909718BAF53500643B6D /* Diskcached */,
+				65FCFAFD18C45FDA00E1E8CD /* Diskcached */,
 				A18C906E18BAF4E100643B6D /* Diskcached Example */,
 				A18C906718BAF4E100643B6D /* Frameworks */,
 				A18C906618BAF4E100643B6D /* Products */,
@@ -97,16 +107,6 @@
 				A18C907618BAF4E100643B6D /* Diskcached Example-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		A18C909718BAF53500643B6D /* Diskcached */ = {
-			isa = PBXGroup;
-			children = (
-				A18C909818BAF53500643B6D /* Diskcached.h */,
-				A18C909918BAF53500643B6D /* Diskcached.m */,
-			);
-			name = Diskcached;
-			path = ../../Diskcached;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,7 +172,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A18C909A18BAF53500643B6D /* Diskcached.m in Sources */,
+				65FCFB0018C45FDA00E1E8CD /* Diskcached.m in Sources */,
 				A18C907918BAF4E100643B6D /* AppDelegate.m in Sources */,
 				A18C907518BAF4E100643B6D /* main.m in Sources */,
 			);

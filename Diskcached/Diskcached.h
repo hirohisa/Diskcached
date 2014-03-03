@@ -22,6 +22,8 @@
 
 @interface Diskcached : NSObject
 
++ (instancetype)defaultCached;
+
 - (NSArray *)allKeys;
 
 - (id)objectForKey:(id)aKey;

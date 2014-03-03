@@ -69,6 +69,20 @@
 
 @implementation Diskcached
 
+#pragma mark - default instance, singleton
+
+static id _instance = nil;
+
++ (instancetype)defaultCached
+{
+    @synchronized(self) {
+        if (!_instance) {
+            _instance = [[self alloc] init];
+        }
+    }
+    return _instance;
+}
+
 #pragma mark - initialize
 
 - (id)init {

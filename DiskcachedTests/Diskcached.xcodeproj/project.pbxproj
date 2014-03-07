@@ -12,6 +12,7 @@
 		A1657B5818BB9A61005843AA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1657B5718BB9A61005843AA /* UIKit.framework */; };
 		A1657B6118BB9A61005843AA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1657B5F18BB9A61005843AA /* InfoPlist.strings */; };
 		A1657B6318BB9A61005843AA /* DiskcachedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A1657B6218BB9A61005843AA /* DiskcachedTests.m */; };
+		A1CC149F18CA385600ABAE3E /* Diskcached.m in Sources */ = {isa = PBXBuildFile; fileRef = A1CC149E18CA385600ABAE3E /* Diskcached.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,8 @@
 		A1657B5E18BB9A61005843AA /* DiskcachedTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DiskcachedTests-Info.plist"; sourceTree = "<group>"; };
 		A1657B6018BB9A61005843AA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A1657B6218BB9A61005843AA /* DiskcachedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiskcachedTests.m; sourceTree = "<group>"; };
+		A1CC149D18CA385600ABAE3E /* Diskcached.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Diskcached.h; sourceTree = "<group>"; };
+		A1CC149E18CA385600ABAE3E /* Diskcached.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Diskcached.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +44,7 @@
 		A1657B3A18BB9A61005843AA = {
 			isa = PBXGroup;
 			children = (
+				A1CC149C18CA385600ABAE3E /* Diskcached */,
 				A1657B5C18BB9A61005843AA /* DiskcachedTests */,
 				A1657B4518BB9A61005843AA /* Frameworks */,
 				A1657B4418BB9A61005843AA /* Products */,
@@ -81,6 +85,16 @@
 				A1657B5F18BB9A61005843AA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A1CC149C18CA385600ABAE3E /* Diskcached */ = {
+			isa = PBXGroup;
+			children = (
+				A1CC149D18CA385600ABAE3E /* Diskcached.h */,
+				A1CC149E18CA385600ABAE3E /* Diskcached.m */,
+			);
+			name = Diskcached;
+			path = ../Diskcached;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,6 +159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1CC149F18CA385600ABAE3E /* Diskcached.m in Sources */,
 				A1657B6318BB9A61005843AA /* DiskcachedTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

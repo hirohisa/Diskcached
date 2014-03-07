@@ -95,7 +95,11 @@ static id _instance = nil;
 
 - (void)_initialize
 {
-    _directoryPath = [NSString stringWithCachesDirectoryAtPath:[@([self hash]) stringValue]];
+    NSString *path = [NSString stringWithFormat:@"%@%@",
+                      NSStringFromClass([self class]),
+                      [@([self hash]) stringValue]];
+
+    _directoryPath = [NSString stringWithCachesDirectoryAtPath:path];
     [self createDirectory];
 }
 

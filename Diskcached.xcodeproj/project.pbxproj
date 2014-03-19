@@ -1,0 +1,424 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10FA6C118D9EF8E00A991C6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10FA6C018D9EF8E00A991C6 /* Foundation.framework */; };
+		A10FA6C618D9EF8E00A991C6 /* Diskcached.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A10FA6C518D9EF8E00A991C6 /* Diskcached.h */; };
+		A10FA6C818D9EF8E00A991C6 /* Diskcached.m in Sources */ = {isa = PBXBuildFile; fileRef = A10FA6C718D9EF8E00A991C6 /* Diskcached.m */; };
+		A10FA6CF18D9EF8F00A991C6 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10FA6CE18D9EF8F00A991C6 /* XCTest.framework */; };
+		A10FA6D018D9EF8F00A991C6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10FA6C018D9EF8E00A991C6 /* Foundation.framework */; };
+		A10FA6D218D9EF8F00A991C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10FA6D118D9EF8F00A991C6 /* UIKit.framework */; };
+		A10FA6D518D9EF8F00A991C6 /* libDiskcached.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A10FA6BD18D9EF8E00A991C6 /* libDiskcached.a */; };
+		A10FA6DB18D9EF8F00A991C6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A10FA6D918D9EF8F00A991C6 /* InfoPlist.strings */; };
+		A10FA6DD18D9EF8F00A991C6 /* DiskcachedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A10FA6DC18D9EF8F00A991C6 /* DiskcachedTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A10FA6D318D9EF8F00A991C6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A10FA6B518D9EF8E00A991C6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A10FA6BC18D9EF8E00A991C6;
+			remoteInfo = Diskcached;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A10FA6BB18D9EF8E00A991C6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				A10FA6C618D9EF8E00A991C6 /* Diskcached.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A10FA6BD18D9EF8E00A991C6 /* libDiskcached.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDiskcached.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10FA6C018D9EF8E00A991C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A10FA6C418D9EF8E00A991C6 /* Diskcached-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Diskcached-Prefix.pch"; sourceTree = "<group>"; };
+		A10FA6C518D9EF8E00A991C6 /* Diskcached.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Diskcached.h; sourceTree = "<group>"; };
+		A10FA6C718D9EF8E00A991C6 /* Diskcached.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Diskcached.m; sourceTree = "<group>"; };
+		A10FA6CD18D9EF8F00A991C6 /* DiskcachedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiskcachedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10FA6CE18D9EF8F00A991C6 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		A10FA6D118D9EF8F00A991C6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		A10FA6D818D9EF8F00A991C6 /* DiskcachedTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DiskcachedTests-Info.plist"; sourceTree = "<group>"; };
+		A10FA6DA18D9EF8F00A991C6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A10FA6DC18D9EF8F00A991C6 /* DiskcachedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiskcachedTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A10FA6BA18D9EF8E00A991C6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10FA6C118D9EF8E00A991C6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10FA6CA18D9EF8F00A991C6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10FA6D518D9EF8F00A991C6 /* libDiskcached.a in Frameworks */,
+				A10FA6CF18D9EF8F00A991C6 /* XCTest.framework in Frameworks */,
+				A10FA6D218D9EF8F00A991C6 /* UIKit.framework in Frameworks */,
+				A10FA6D018D9EF8F00A991C6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A10FA6B418D9EF8E00A991C6 = {
+			isa = PBXGroup;
+			children = (
+				A10FA6C218D9EF8E00A991C6 /* Diskcached */,
+				A10FA6D618D9EF8F00A991C6 /* DiskcachedTests */,
+				A10FA6BF18D9EF8E00A991C6 /* Frameworks */,
+				A10FA6BE18D9EF8E00A991C6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A10FA6BE18D9EF8E00A991C6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A10FA6BD18D9EF8E00A991C6 /* libDiskcached.a */,
+				A10FA6CD18D9EF8F00A991C6 /* DiskcachedTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A10FA6BF18D9EF8E00A991C6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A10FA6C018D9EF8E00A991C6 /* Foundation.framework */,
+				A10FA6CE18D9EF8F00A991C6 /* XCTest.framework */,
+				A10FA6D118D9EF8F00A991C6 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A10FA6C218D9EF8E00A991C6 /* Diskcached */ = {
+			isa = PBXGroup;
+			children = (
+				A10FA6C518D9EF8E00A991C6 /* Diskcached.h */,
+				A10FA6C718D9EF8E00A991C6 /* Diskcached.m */,
+				A10FA6C318D9EF8E00A991C6 /* Supporting Files */,
+			);
+			path = Diskcached;
+			sourceTree = "<group>";
+		};
+		A10FA6C318D9EF8E00A991C6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A10FA6C418D9EF8E00A991C6 /* Diskcached-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A10FA6D618D9EF8F00A991C6 /* DiskcachedTests */ = {
+			isa = PBXGroup;
+			children = (
+				A10FA6DC18D9EF8F00A991C6 /* DiskcachedTests.m */,
+				A10FA6D718D9EF8F00A991C6 /* Supporting Files */,
+			);
+			path = DiskcachedTests;
+			sourceTree = "<group>";
+		};
+		A10FA6D718D9EF8F00A991C6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A10FA6D818D9EF8F00A991C6 /* DiskcachedTests-Info.plist */,
+				A10FA6D918D9EF8F00A991C6 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A10FA6BC18D9EF8E00A991C6 /* Diskcached */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10FA6E018D9EF8F00A991C6 /* Build configuration list for PBXNativeTarget "Diskcached" */;
+			buildPhases = (
+				A10FA6B918D9EF8E00A991C6 /* Sources */,
+				A10FA6BA18D9EF8E00A991C6 /* Frameworks */,
+				A10FA6BB18D9EF8E00A991C6 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Diskcached;
+			productName = Diskcached;
+			productReference = A10FA6BD18D9EF8E00A991C6 /* libDiskcached.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		A10FA6CC18D9EF8F00A991C6 /* DiskcachedTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10FA6E318D9EF8F00A991C6 /* Build configuration list for PBXNativeTarget "DiskcachedTests" */;
+			buildPhases = (
+				A10FA6C918D9EF8F00A991C6 /* Sources */,
+				A10FA6CA18D9EF8F00A991C6 /* Frameworks */,
+				A10FA6CB18D9EF8F00A991C6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A10FA6D418D9EF8F00A991C6 /* PBXTargetDependency */,
+			);
+			name = DiskcachedTests;
+			productName = DiskcachedTests;
+			productReference = A10FA6CD18D9EF8F00A991C6 /* DiskcachedTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A10FA6B518D9EF8E00A991C6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Hirohisa Kawasaki";
+			};
+			buildConfigurationList = A10FA6B818D9EF8E00A991C6 /* Build configuration list for PBXProject "Diskcached" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A10FA6B418D9EF8E00A991C6;
+			productRefGroup = A10FA6BE18D9EF8E00A991C6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A10FA6BC18D9EF8E00A991C6 /* Diskcached */,
+				A10FA6CC18D9EF8F00A991C6 /* DiskcachedTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A10FA6CB18D9EF8F00A991C6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10FA6DB18D9EF8F00A991C6 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A10FA6B918D9EF8E00A991C6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10FA6C818D9EF8E00A991C6 /* Diskcached.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10FA6C918D9EF8F00A991C6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10FA6DD18D9EF8F00A991C6 /* DiskcachedTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A10FA6D418D9EF8F00A991C6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A10FA6BC18D9EF8E00A991C6 /* Diskcached */;
+			targetProxy = A10FA6D318D9EF8F00A991C6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A10FA6D918D9EF8F00A991C6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A10FA6DA18D9EF8F00A991C6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A10FA6DE18D9EF8F00A991C6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A10FA6DF18D9EF8F00A991C6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A10FA6E118D9EF8F00A991C6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/Diskcached.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Diskcached/Diskcached-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A10FA6E218D9EF8F00A991C6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/Diskcached.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Diskcached/Diskcached-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		A10FA6E418D9EF8F00A991C6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Diskcached/Diskcached-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "DiskcachedTests/DiskcachedTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		A10FA6E518D9EF8F00A991C6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Diskcached/Diskcached-Prefix.pch";
+				INFOPLIST_FILE = "DiskcachedTests/DiskcachedTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A10FA6B818D9EF8E00A991C6 /* Build configuration list for PBXProject "Diskcached" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10FA6DE18D9EF8F00A991C6 /* Debug */,
+				A10FA6DF18D9EF8F00A991C6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10FA6E018D9EF8F00A991C6 /* Build configuration list for PBXNativeTarget "Diskcached" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10FA6E118D9EF8F00A991C6 /* Debug */,
+				A10FA6E218D9EF8F00A991C6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A10FA6E318D9EF8F00A991C6 /* Build configuration list for PBXNativeTarget "DiskcachedTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10FA6E418D9EF8F00A991C6 /* Debug */,
+				A10FA6E518D9EF8F00A991C6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A10FA6B518D9EF8E00A991C6 /* Project object */;
+}

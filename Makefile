@@ -1,4 +1,4 @@
-PROJECT = DiskcachedTests/Diskcached.xcodeproj
+PROJECT = Diskcached.xcodeproj
 
 clean:
 	xcodebuild \

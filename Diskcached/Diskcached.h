@@ -20,9 +20,14 @@
 
 @end
 
+
 @interface Diskcached : NSObject
 
+
 + (instancetype)defaultCached;
+
+
+- (id)initAtPath:(NSString *)path inUserDomainDirectory:(NSSearchPathDirectory)directory;
 
 - (NSArray *)allKeys;
 

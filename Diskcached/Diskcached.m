@@ -46,10 +46,10 @@
 
 @implementation NSString (Diskcached)
 
-+ (NSString *)stringWithCachesDirectoryAtPath:(id <NSCopying>)path
++ (NSString *)stringWithPath:(NSString *)path inUserDomainDirectory:(NSSearchPathDirectory)searchPathDirectory
 {
-    NSString *cachesDirectory = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
-    return [NSString stringWithFormat:@"%@/%@", cachesDirectory, path];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(searchPathDirectory, NSUserDomainMask, YES);
+    return [paths[0] stringByAppendingPathComponent:path];
 }
 
 - (NSString *)stringByAppendingEscapesPathComponent:(NSString *)str
@@ -60,47 +60,106 @@
 
 @end
 
+@interface DiskcachedOperation : NSOperation
+
+@property (nonatomic, readonly) NSData *data;
+@property (nonatomic, readonly) NSString *file;
+@property (nonatomic, copy) void (^completionBlock)();
+
+@end
+
+@implementation DiskcachedOperation
+
+- (id)initWithData:(NSData *)data AtFile:(NSString *)file
+{
+    self = [super init];
+    if (self) {
+        _data = data;
+        _file   = file;
+    }
+    return self;
+}
+
+- (void)main
+{
+    [self.data writeToFile:self.file atomically:NO];
+    if (self.completionBlock) {
+        self.completionBlock();
+    }
+}
+
+- (void)cancel
+{
+    [super cancel];
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath:self.file
+                                               error:&error];
+    _data = nil;
+    _file = nil;
+    if (error) {
+        NSLog(@"error %@", error);
+    }
+}
+
+@end
+
 
 @interface Diskcached ()
 
+@property (nonatomic, strong) NSOperationQueue *operationQueue;
 @property (nonatomic, readonly) NSString *directoryPath;
+@property (nonatomic, strong) NSLock *lock;
 
 @end
 
 @implementation Diskcached
 
+static NSString * const DiskcachedLockName = @"DiskcachedLockName";
+
+
 #pragma mark - default instance, singleton
 
-static id _instance = nil;
++ (instancetype)defaultCached {
+    static Diskcached *_defaultCached = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _defaultCached = [[self alloc] initAtPath:@"Diskcached" inUserDomainDirectory:NSCachesDirectory];
+    });
 
-+ (instancetype)defaultCached
-{
-    @synchronized(self) {
-        if (!_instance) {
-            _instance = [[self alloc] init];
-        }
-    }
-    return _instance;
+    return _defaultCached;
 }
 
 #pragma mark - initialize
 
-- (id)init {
-    self = [super init];
-    if (self) {
-        [self _initialize];
-    }
-    return self;
-}
-
-- (void)_initialize
+- (id)init
 {
     NSString *path = [NSString stringWithFormat:@"%@%@",
                       NSStringFromClass([self class]),
                       [@([self hash]) stringValue]];
+    return [self initAtPath:path inUserDomainDirectory:NSCachesDirectory];
+}
 
-    _directoryPath = [NSString stringWithCachesDirectoryAtPath:path];
+- (id)initAtPath:(NSString *)path inUserDomainDirectory:(NSSearchPathDirectory)directory
+{
+    self = [super init];
+    if (self) {
+        _directoryPath = [NSString stringWithPath:path inUserDomainDirectory:directory];
+        [self diskcached_configure];
+    }
+    return self;
+}
+
+
+- (void)diskcached_configure
+{
+    // create directory
     [self createDirectory];
+
+    // operation queue
+    self.operationQueue = [[NSOperationQueue alloc] init];
+    self.operationQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
+    self.lock = [[NSLock alloc] init];
+    self.lock.name = DiskcachedLockName;
 }
 
 - (BOOL)createDirectory
@@ -132,12 +191,20 @@ static id _instance = nil;
         [NSException raise:NSInvalidArgumentException format:@"%s: key is nil", __func__];
     }
 
-    if (![self objectExistsForKey:aKey]) {
-        return nil;
+    NSString *file = [self.directoryPath stringByAppendingEscapesPathComponent:aKey];
+
+    NSData *data;
+    for (DiskcachedOperation *operation in self.operationQueue.operations) {
+        if ([operation.file isEqual:file]) {
+            data = operation.data;
+        }
     }
 
-    NSString *file = [self.directoryPath stringByAppendingEscapesPathComponent:aKey];
-    NSData *data = [NSData dataWithContentsOfFile:file];
+    if (!data &&
+        [self objectExistsAtFile:file]) {
+        data = [NSData dataWithContentsOfFile:file];
+    }
+
     if (data) {
         return [NSKeyedUnarchiver unarchiveObjectWithData:data];
     }
@@ -153,8 +220,10 @@ static id _instance = nil;
     }
 
     NSString *file = [self.directoryPath stringByAppendingEscapesPathComponent:aKey];
+    NSData   *data = [NSKeyedArchiver archivedDataWithRootObject:anObject];
+    DiskcachedOperation *operation = [[DiskcachedOperation alloc] initWithData:data AtFile:file];
 
-    [NSKeyedArchiver archiveRootObject:anObject toFile:file];
+    [self.operationQueue addOperation:operation];
 }
 
 - (NSArray *)allKeys
@@ -167,6 +236,12 @@ static id _instance = nil;
     }
 
     NSMutableArray *allKeys = [@[] mutableCopy];
+    for (DiskcachedOperation *operation in self.operationQueue.operations) {
+        if ([operation isExecuting] && ![operation isCancelled]) {
+            NSString *rawString = [[operation.file lastPathComponent] stringByEscapesUsingDecoding:NSUTF8StringEncoding];
+            [allKeys addObject:rawString];
+        }
+    }
     for (NSString *key in result) {
         NSString *rawString = [key stringByEscapesUsingDecoding:NSUTF8StringEncoding];
         [allKeys addObject:rawString];
@@ -181,6 +256,12 @@ static id _instance = nil;
     }
 
     NSString *file = [self.directoryPath stringByAppendingEscapesPathComponent:aKey];
+
+    for (DiskcachedOperation *operation in self.operationQueue.operations) {
+        if ([operation.file isEqual:file]) {
+            [operation cancel];
+        }
+    }
     [[NSFileManager defaultManager] removeItemAtPath:file
                                                error:NULL];
 }
@@ -197,10 +278,8 @@ static id _instance = nil;
 
 #pragma mark - private
 
-- (BOOL)objectExistsForKey:(id)aKey
+- (BOOL)objectExistsAtFile:(NSString *)file
 {
-    NSString *file = [self.directoryPath stringByAppendingEscapesPathComponent:aKey];
-
     BOOL exists = [[NSFileManager defaultManager]
                    fileExistsAtPath:file
                    isDirectory:NULL];

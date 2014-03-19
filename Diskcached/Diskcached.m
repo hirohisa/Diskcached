@@ -7,22 +7,23 @@
 //
 
 #import "Diskcached.h"
+#import <CommonCrypto/CommonDigest.h>
 
 @implementation  NSString (Encode)
 
-+ (NSString *)escapesString
++ (NSString *)diskcached_escapesString
 {
     return @"!*'\"();:@&=+$,/?%#[]% ";
 }
 
-- (NSString *)stringByEscapesUsingEncoding:(NSStringEncoding)enc
+- (NSString *)diskcached_stringByEscapesUsingEncoding:(NSStringEncoding)enc
 {
     NSString *escapedString = (__bridge_transfer NSString *)
     CFURLCreateStringByAddingPercentEscapes(
                                             kCFAllocatorDefault,
                                             (__bridge CFStringRef)self,
                                             NULL,
-                                            (CFStringRef)[NSString escapesString],
+                                            (CFStringRef)[NSString diskcached_escapesString],
                                             CFStringConvertNSStringEncodingToEncoding(enc));
     return escapedString;
 }
@@ -31,7 +32,7 @@
 
 @implementation  NSString (Decode)
 
-- (NSString *)stringByEscapesUsingDecoding:(NSStringEncoding)enc
+- (NSString *)diskcached_stringByEscapesUsingDecoding:(NSStringEncoding)enc
 {
     NSString *rawString = (__bridge_transfer NSString *)
     CFURLCreateStringByReplacingPercentEscapesUsingEncoding(
@@ -44,17 +45,35 @@
 
 @end
 
+@implementation NSString (MD5)
+
+- (NSString *)diskcached_MD5Hash
+{
+    const char *charString = [self UTF8String];
+
+    unsigned char result[16];
+    CC_MD5(charString, strlen(charString), result);
+
+    return [NSString stringWithFormat:@"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+            result[0],  result[1],  result[2],  result[3],
+            result[4],  result[5],  result[6],  result[7],
+            result[8],  result[9],  result[10], result[11],
+            result[12], result[13], result[14], result[15]];
+}
+
+@end
+
 @implementation NSString (Diskcached)
 
-+ (NSString *)stringWithPath:(NSString *)path inUserDomainDirectory:(NSSearchPathDirectory)searchPathDirectory
++ (NSString *)diskcached_stringWithPath:(NSString *)path inUserDomainDirectory:(NSSearchPathDirectory)searchPathDirectory
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(searchPathDirectory, NSUserDomainMask, YES);
     return [paths[0] stringByAppendingPathComponent:path];
 }
 
-- (NSString *)stringByAppendingEscapesPathComponent:(NSString *)str
+- (NSString *)diskcached_stringByAppendingEscapesPathComponent:(NSString *)str
 {
-    NSString *escapedString = [str stringByEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *escapedString = [str diskcached_stringByEscapesUsingEncoding:NSUTF8StringEncoding];
     return [self stringByAppendingPathComponent:escapedString];
 }
 
@@ -108,13 +127,10 @@
 
 @property (nonatomic, strong) NSOperationQueue *operationQueue;
 @property (nonatomic, readonly) NSString *directoryPath;
-@property (nonatomic, strong) NSLock *lock;
 
 @end
 
 @implementation Diskcached
-
-static NSString * const DiskcachedLockName = @"DiskcachedLockName";
 
 
 #pragma mark - default instance, singleton
@@ -143,7 +159,7 @@ static NSString * const DiskcachedLockName = @"DiskcachedLockName";
 {
     self = [super init];
     if (self) {
-        _directoryPath = [NSString stringWithPath:path inUserDomainDirectory:directory];
+        _directoryPath = [NSString diskcached_stringWithPath:path inUserDomainDirectory:directory];
         [self diskcached_configure];
     }
     return self;
@@ -158,8 +174,6 @@ static NSString * const DiskcachedLockName = @"DiskcachedLockName";
     // operation queue
     self.operationQueue = [[NSOperationQueue alloc] init];
     self.operationQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
-    self.lock = [[NSLock alloc] init];
-    self.lock.name = DiskcachedLockName;
 }
 
 - (BOOL)createDirectory
@@ -191,7 +205,7 @@ static NSString * const DiskcachedLockName = @"DiskcachedLockName";
         [NSException raise:NSInvalidArgumentException format:@"%s: key is nil", __func__];
     }
 
-    NSString *file = [self.directoryPath stringByAppendingEscapesPathComponent:aKey];
+    NSString *file = [self.directoryPath diskcached_stringByAppendingEscapesPathComponent:aKey];
 
     NSData *data;
     for (DiskcachedOperation *operation in self.operationQueue.operations) {
@@ -219,7 +233,7 @@ static NSString * const DiskcachedLockName = @"DiskcachedLockName";
         [NSException raise:NSInvalidArgumentException format:@"%s: object or key is nil", __func__];
     }
 
-    NSString *file = [self.directoryPath stringByAppendingEscapesPathComponent:aKey];
+    NSString *file = [self.directoryPath diskcached_stringByAppendingEscapesPathComponent:aKey];
     NSData   *data = [NSKeyedArchiver archivedDataWithRootObject:anObject];
     DiskcachedOperation *operation = [[DiskcachedOperation alloc] initWithData:data AtFile:file];
 
@@ -238,12 +252,12 @@ static NSString * const DiskcachedLockName = @"DiskcachedLockName";
     NSMutableArray *allKeys = [@[] mutableCopy];
     for (DiskcachedOperation *operation in self.operationQueue.operations) {
         if ([operation isExecuting] && ![operation isCancelled]) {
-            NSString *rawString = [[operation.file lastPathComponent] stringByEscapesUsingDecoding:NSUTF8StringEncoding];
+            NSString *rawString = [[operation.file lastPathComponent] diskcached_stringByEscapesUsingDecoding:NSUTF8StringEncoding];
             [allKeys addObject:rawString];
         }
     }
     for (NSString *key in result) {
-        NSString *rawString = [key stringByEscapesUsingDecoding:NSUTF8StringEncoding];
+        NSString *rawString = [key diskcached_stringByEscapesUsingDecoding:NSUTF8StringEncoding];
         [allKeys addObject:rawString];
     }
     return [allKeys copy];
@@ -255,7 +269,7 @@ static NSString * const DiskcachedLockName = @"DiskcachedLockName";
         [NSException raise:NSInvalidArgumentException format:@"%s: key is nil", __func__];
     }
 
-    NSString *file = [self.directoryPath stringByAppendingEscapesPathComponent:aKey];
+    NSString *file = [self.directoryPath diskcached_stringByAppendingEscapesPathComponent:aKey];
 
     for (DiskcachedOperation *operation in self.operationQueue.operations) {
         if ([operation.file isEqual:file]) {
@@ -271,7 +285,7 @@ static NSString * const DiskcachedLockName = @"DiskcachedLockName";
     NSFileManager *manager = [NSFileManager defaultManager];
 
     for(NSString *filePath in [self allKeys]) {
-        [manager removeItemAtPath:[self.directoryPath stringByAppendingEscapesPathComponent:filePath]
+        [manager removeItemAtPath:[self.directoryPath diskcached_stringByAppendingEscapesPathComponent:filePath]
                             error:NULL];
     }
 }

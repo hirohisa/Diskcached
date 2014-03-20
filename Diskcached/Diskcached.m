@@ -141,6 +141,7 @@
 {
     self = [super init];
     if (self) {
+        self.cleanDiskWhenDealloc = YES;
         _directoryPath = [NSString diskcached_stringWithPath:path inUserDomainDirectory:directory];
         [self diskcached_configure];
     }
@@ -173,10 +174,17 @@
                                         error:NULL];
 }
 
-- (void)dealloc
+- (void)diskcached_cleanDisk
 {
     [self removeAllObjects];
     [[NSFileManager defaultManager] removeItemAtPath:self.directoryPath error:NULL];
+}
+
+- (void)dealloc
+{
+    if (self.cleanDiskWhenDealloc) {
+        [self diskcached_cleanDisk];
+    }
 }
 
 #pragma mark - public

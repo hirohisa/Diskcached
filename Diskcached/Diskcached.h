@@ -22,16 +22,15 @@
 
 @interface Diskcached : NSObject
 
+@property (nonatomic) BOOL cleanDiskWhenDealloc; // default is YES, if dealloc, clean data and directory
 
 + (instancetype)defaultCached;
-
 
 - (id)initAtPath:(NSString *)path inUserDomainDirectory:(NSSearchPathDirectory)directory;
 
 - (NSArray *)allKeys;
 
 - (id)objectForKey:(id)aKey;
-
 - (void)setObject:(id<NSCoding>)anObject forKey:(id)aKey;
 
 - (void)removeObjectForKey:(id)aKey;

@@ -88,7 +88,7 @@
     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
 }
 
-- (void)testCleanDiskWhenDealloced
+- (void)testCleanDiskWhenDealloc
 {
     NSString *str = @"test";
     NSString *key = @"key";
@@ -115,6 +115,37 @@
     XCTAssertTrue(!fileExists,
                   @"`dealloc` is fail, directory exists, %@", directoryPath);
     XCTAssertTrue(!fileExists || !isDirectory,
+                  @"`dealloc` is fail, directory exists and change format to `file`, %@", directoryPath);
+}
+
+- (void)testNotCleanDiskWhenDealloc
+{
+    NSString *str = @"test";
+    NSString *key = @"key";
+    NSString *directoryPath;
+
+    Diskcached *cached = [[Diskcached alloc] initAtPath:@"test" inUserDomainDirectory:NSCachesDirectory];
+    cached.cleanDiskWhenDealloc = NO;
+    directoryPath = cached.directoryPath;
+
+    [cached setObject:str forKey:key];
+
+    XCTAssertNotNil([cached objectForKey:key],
+                    @"Diskcached doesnt have an object");
+    cached = nil;
+
+    // validate to have files in directoy
+    id contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPath error:NULL];
+    XCTAssertNotNil(contents,
+                    @"`dealloc` is fail, files dont exists, %@", directoryPath);
+
+    // validate to exist directoy
+    BOOL isDirectory = NO;
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:directoryPath isDirectory:&isDirectory];
+
+    XCTAssertTrue(fileExists,
+                  @"`dealloc` is fail, directory dont exists, %@", directoryPath);
+    XCTAssertTrue(fileExists && isDirectory,
                   @"`dealloc` is fail, directory exists but change format to `file`, %@", directoryPath);
 }
 

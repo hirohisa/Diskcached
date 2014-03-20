@@ -189,13 +189,13 @@
 
 #pragma mark - public
 
-- (id)objectForKey:(id)aKey
+- (id)objectForKey:(NSString *)key
 {
-    if (!aKey) {
+    if (!key) {
         [NSException raise:NSInvalidArgumentException format:@"%s: key is nil", __func__];
     }
 
-    NSString *file = [self.directoryPath diskcached_stringByAppendingEscapesPathComponent:aKey];
+    NSString *file = [self.directoryPath diskcached_stringByAppendingEscapesPathComponent:key];
 
     NSData *data;
     for (DiskcachedOperation *operation in self.operationQueue.operations) {
@@ -216,15 +216,15 @@
     return nil;
 }
 
-- (void)setObject:(id<NSCoding>)anObject forKey:(id)aKey
+- (void)setObject:(id<NSCoding>)object forKey:(NSString *)key
 {
-    if (!aKey ||
-        !anObject) {
+    if (!key ||
+        !object) {
         [NSException raise:NSInvalidArgumentException format:@"%s: object or key is nil", __func__];
     }
 
-    NSString *file = [self.directoryPath diskcached_stringByAppendingEscapesPathComponent:aKey];
-    NSData   *data = [NSKeyedArchiver archivedDataWithRootObject:anObject];
+    NSString *file = [self.directoryPath diskcached_stringByAppendingEscapesPathComponent:key];
+    NSData   *data = [NSKeyedArchiver archivedDataWithRootObject:object];
     DiskcachedOperation *operation = [[DiskcachedOperation alloc] initWithData:data AtFile:file];
 
     [self.operationQueue addOperation:operation];
@@ -253,13 +253,13 @@
     return [allKeys copy];
 }
 
-- (void)removeObjectForKey:(id)aKey
+- (void)removeObjectForKey:(NSString *)key
 {
-    if (!aKey) {
+    if (!key) {
         [NSException raise:NSInvalidArgumentException format:@"%s: key is nil", __func__];
     }
 
-    NSString *file = [self.directoryPath diskcached_stringByAppendingEscapesPathComponent:aKey];
+    NSString *file = [self.directoryPath diskcached_stringByAppendingEscapesPathComponent:key];
 
     for (DiskcachedOperation *operation in self.operationQueue.operations) {
         if ([operation.file isEqual:file]) {

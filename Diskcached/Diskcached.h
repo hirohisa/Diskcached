@@ -30,10 +30,10 @@
 
 - (NSArray *)allKeys;
 
-- (id)objectForKey:(id)aKey;
-- (void)setObject:(id<NSCoding>)anObject forKey:(id)aKey;
+- (id)objectForKey:(NSString *)key;
+- (void)setObject:(id<NSCoding>)object forKey:(NSString *)key;
 
-- (void)removeObjectForKey:(id)aKey;
+- (void)removeObjectForKey:(NSString *)key;
 - (void)removeAllObjects;
 
 @end

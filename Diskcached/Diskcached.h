@@ -20,14 +20,6 @@
 
 @end
 
-@interface NSString (MD5)
-
-- (NSString *)diskcached_MD5Hash;
-
-@end;
-
-
-
 @interface Diskcached : NSObject
 
 

@@ -133,26 +133,27 @@
 - (void)testEncodeAndDecode
 {
     NSStringEncoding enc = NSUTF8StringEncoding;
+    NSString *str;
     id valid;
 
-    NSString *str = @"あいう";
-    NSString *result = [str diskcached_stringByEscapesUsingEncoding:enc];
+    str     = @"あいう";
+    valid   = @"%E3%81%82%E3%81%84%E3%81%86";
 
-    valid = @"%E3%81%82%E3%81%84%E3%81%86";
+    NSString *result = [str diskcached_stringByEscapesUsingEncoding:enc];
     XCTAssertTrue([result isEqual:valid],
                    @"`encode` is fail, str :%@",
                    str);
-
     XCTAssertTrue([[result diskcached_stringByEscapesUsingDecoding:enc] isEqual:str],
-                  @"`encode` is fail, str :%@",
+                  @"`decode` is fail, str :%@",
                   str);
 
 
 
-    NSString *path = @"../";
-    XCTAssertFalse([[path diskcached_stringByEscapesUsingEncoding:enc] isEqual:path],
-                   @"`encode` is fail, path :%@",
-                   path);
+    str     = @"../";
+    valid   = @"..%2F";
+    XCTAssertTrue([[str diskcached_stringByEscapesUsingEncoding:enc] isEqual:valid],
+                  @"`encode` is fail, str :%@",
+                  str);
 }
 
 @end

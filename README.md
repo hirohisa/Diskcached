@@ -17,7 +17,7 @@ There are two ways to use this in your project:
 - Install with CocoaPods to write Podfile
 ```ruby
 platform :ios
-pod 'Diskcached', :git => 'https://github.com/hirohisa/Diskcached.git'
+pod 'Diskcached', '~> 0.0.1'
 ```
 
 Example
@@ -32,6 +32,15 @@ Diskcached *cached = [[Diskcached alloc] init];
 id result = [cached objectForKey:@"key"];
 
 ```
+
+Unsupport
+----------
+
+- Dont implement hash function in Diskcached. If need, generate the key with hash function.
+
+### Hash Function
+- [MD5](Hash/NSString+MD5.h)
+
 
 ## License
 

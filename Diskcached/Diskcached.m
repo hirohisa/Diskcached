@@ -7,7 +7,6 @@
 //
 
 #import "Diskcached.h"
-#import <CommonCrypto/CommonDigest.h>
 
 @implementation  NSString (Encode)
 

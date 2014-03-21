@@ -16,6 +16,7 @@
 		A10FA6D518D9EF8F00A991C6 /* libDiskcached.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A10FA6BD18D9EF8E00A991C6 /* libDiskcached.a */; };
 		A10FA6DB18D9EF8F00A991C6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A10FA6D918D9EF8F00A991C6 /* InfoPlist.strings */; };
 		A10FA6DD18D9EF8F00A991C6 /* DiskcachedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A10FA6DC18D9EF8F00A991C6 /* DiskcachedTests.m */; };
+		A1A485FE18DCC83200543B57 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A485FD18DCC83200543B57 /* NSString+MD5.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		A10FA6D818D9EF8F00A991C6 /* DiskcachedTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DiskcachedTests-Info.plist"; sourceTree = "<group>"; };
 		A10FA6DA18D9EF8F00A991C6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A10FA6DC18D9EF8F00A991C6 /* DiskcachedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiskcachedTests.m; sourceTree = "<group>"; };
+		A1A485FC18DCC83200543B57 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		A1A485FD18DCC83200543B57 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +84,7 @@
 		A10FA6B418D9EF8E00A991C6 = {
 			isa = PBXGroup;
 			children = (
+				A1A485FB18DCC83200543B57 /* Hash */,
 				A10FA6C218D9EF8E00A991C6 /* Diskcached */,
 				A10FA6D618D9EF8F00A991C6 /* DiskcachedTests */,
 				A10FA6BF18D9EF8E00A991C6 /* Frameworks */,
@@ -141,6 +145,15 @@
 				A10FA6D918D9EF8F00A991C6 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A1A485FB18DCC83200543B57 /* Hash */ = {
+			isa = PBXGroup;
+			children = (
+				A1A485FC18DCC83200543B57 /* NSString+MD5.h */,
+				A1A485FD18DCC83200543B57 /* NSString+MD5.m */,
+			);
+			path = Hash;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,6 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1A485FE18DCC83200543B57 /* NSString+MD5.m in Sources */,
 				A10FA6DD18D9EF8F00A991C6 /* DiskcachedTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,6 +423,7 @@
 				A10FA6E218D9EF8F00A991C6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A10FA6E318D9EF8F00A991C6 /* Build configuration list for PBXNativeTarget "DiskcachedTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +432,7 @@
 				A10FA6E518D9EF8F00A991C6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

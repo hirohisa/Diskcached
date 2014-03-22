@@ -66,7 +66,6 @@
 
     XCTAssertTrue([result[1] isEqual:strings[1]],
                   @"result[1] %@ is fail", result[1]);
-    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
 }
 
 - (void)testRemoveObjectForKey
@@ -85,7 +84,6 @@
 
     XCTAssertNil([cached objectForKey:key],
                  @"Diskcached have an object");
-    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
 }
 
 - (void)testCleanDiskWhenDealloc
@@ -157,6 +155,19 @@
     XCTAssertEqual(baseClass.directoryPath, inheritedClass.directoryPath,
                       @"`inheritance` about default cached is fail, base:%@, inherited:%@",
                       baseClass.directoryPath, inheritedClass.directoryPath);
+}
+
+- (void)testAsync
+{
+    Diskcached *cached = [[Diskcached alloc] init];
+    [cached setObject:@"test" forKey:@"key"];
+    [cached setObject:@"test2" forKey:@"key"];
+
+    id result = [cached objectForKey:@"key"];
+    id valid  = @"test2";
+
+    XCTAssertTrue([result isEqualToString:valid],
+                   @"`set on async` is fail, result is %@", result);
 }
 
 // NSString Category

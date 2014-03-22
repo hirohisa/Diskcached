@@ -60,8 +60,16 @@
 
 @end
 
+
+typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
+    DiskcachedOperationReadyState,
+    DiskcachedOperationExecutingState,
+    DiskcachedOperationFinishedState,
+};
+
 @interface DiskcachedOperation : NSOperation
 
+@property (nonatomic) DiskcachedOperationState state;
 @property (nonatomic, readonly) NSData *data;
 @property (nonatomic, readonly) NSString *file;
 @property (nonatomic, copy) void (^completionBlock)();
@@ -74,30 +82,56 @@
 {
     self = [super init];
     if (self) {
+        self.state = DiskcachedOperationReadyState;
         _data = data;
         _file   = file;
     }
     return self;
 }
 
-- (void)main
+#pragma mark - accessor
+
+- (BOOL)isExecuting
 {
+    return self.state == DiskcachedOperationExecutingState;
+}
+
+- (BOOL)isFinished
+{
+    return self.state = DiskcachedOperationFinishedState;
+}
+
+#pragma mark - run
+
+- (void)start
+{
+    [self diskcached_run];
+}
+
+- (void)diskcached_run
+{
+    self.state = DiskcachedOperationExecutingState;
+
     [self.data writeToFile:self.file atomically:NO];
-    if (self.completionBlock) {
-        self.completionBlock();
-    }
+    [self finish];
 }
 
 - (void)cancel
 {
     [super cancel];
-    NSError *error;
     [[NSFileManager defaultManager] removeItemAtPath:self.file
-                                               error:&error];
+                                               error:NULL];
+    [self finish];
+}
+
+- (void)finish
+{
     _data = nil;
     _file = nil;
-    if (error) {
-        NSLog(@"error %@", error);
+    self.state = DiskcachedOperationFinishedState;
+
+    if (self.completionBlock) {
+        self.completionBlock();
     }
 }
 
@@ -224,8 +258,14 @@
 
     NSString *file = [self.directoryPath diskcached_stringByAppendingEscapesPathComponent:key];
     NSData   *data = [NSKeyedArchiver archivedDataWithRootObject:object];
-    DiskcachedOperation *operation = [[DiskcachedOperation alloc] initWithData:data AtFile:file];
 
+    for (DiskcachedOperation *operation in self.operationQueue.operations) {
+        if ([operation.file isEqualToString:file]) {
+            [operation cancel];
+        }
+    }
+
+    DiskcachedOperation *operation = [[DiskcachedOperation alloc] initWithData:data AtFile:file];
     [self.operationQueue addOperation:operation];
 }
 
@@ -233,14 +273,14 @@
 {
     NSError *error = nil;
     id result = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.directoryPath
-                                                                     error:&error];
+                                                                    error:&error];
     if (error) {
         return nil;
     }
 
     NSMutableArray *allKeys = [@[] mutableCopy];
     for (DiskcachedOperation *operation in self.operationQueue.operations) {
-        if ([operation isExecuting] && ![operation isCancelled]) {
+        if (![operation isFinished]) {
             NSString *rawString = [[operation.file lastPathComponent] diskcached_stringByEscapesUsingDecoding:NSUTF8StringEncoding];
             [allKeys addObject:rawString];
         }
@@ -283,10 +323,9 @@
 
 - (BOOL)objectExistsAtFile:(NSString *)file
 {
-    BOOL exists = [[NSFileManager defaultManager]
-                   fileExistsAtPath:file
-                   isDirectory:NULL];
-    
+    BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:file
+                                                       isDirectory:NULL];
+
     return exists;
 }
 

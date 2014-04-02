@@ -9,12 +9,6 @@
 #import <XCTest/XCTest.h>
 #import "Diskcached.h"
 
-@interface Diskcached ()
-
-@property (nonatomic, readonly) NSString *directoryPath;
-
-@end
-
 @interface TestDiskcached : Diskcached
 @end
 

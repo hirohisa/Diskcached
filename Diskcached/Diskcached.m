@@ -141,7 +141,6 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
 @interface Diskcached ()
 
 @property (nonatomic, strong) NSOperationQueue *operationQueue;
-@property (nonatomic, readonly) NSString *directoryPath;
 
 @end
 

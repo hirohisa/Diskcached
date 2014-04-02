@@ -23,6 +23,7 @@
 @interface Diskcached : NSObject
 
 @property (nonatomic) BOOL cleanDiskWhenDealloc; // default is YES, if dealloc, clean data and directory
+@property (nonatomic, readonly) NSString *directoryPath; // directory's path for saving objects
 
 + (instancetype)defaultCached;
 

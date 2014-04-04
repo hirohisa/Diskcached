@@ -173,7 +173,6 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
 {
     self = [super init];
     if (self) {
-        self.cleanDiskWhenDealloc = YES;
         _directoryPath = [NSString diskcached_stringWithPath:path inUserDomainDirectory:directory];
         [self diskcached_configure];
     }
@@ -183,6 +182,10 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
 
 - (void)diskcached_configure
 {
+    // set initial properties
+    self.cleanDiskWhenDealloc   = YES;
+    self.useArchiver            = YES;
+
     // create directory
     [self createDirectory];
 
@@ -242,6 +245,9 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
     }
 
     if (data) {
+        if (!self.useArchiver) {
+            return data;
+        }
         return [NSKeyedUnarchiver unarchiveObjectWithData:data];
     }
 
@@ -254,9 +260,18 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
         !object) {
         [NSException raise:NSInvalidArgumentException format:@"%s: object or key is nil", __func__];
     }
+    if (!self.useArchiver &&
+        [(NSObject *)object isMemberOfClass:[NSData class]]) {
+        [NSException raise:NSInvalidArgumentException format:@"%s: cant write to disk", __func__];
+    }
 
     NSString *file = [self.directoryPath diskcached_stringByAppendingEscapesPathComponent:key];
-    NSData   *data = [NSKeyedArchiver archivedDataWithRootObject:object];
+    NSData   *data;
+    if (!self.useArchiver) {
+        data = (NSData *)object;
+    } else {
+        data = [NSKeyedArchiver archivedDataWithRootObject:object];
+    }
 
     for (DiskcachedOperation *operation in self.operationQueue.operations) {
         if ([operation.file isEqualToString:file]) {

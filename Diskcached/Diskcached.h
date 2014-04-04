@@ -22,6 +22,11 @@
 
 @interface Diskcached : NSObject
 
+// default is YES, if `setObject:forKey:` and `objectForKey:`, then use NSKeyedArchiver, NSKeyedUnarchiver
+// if useArchiver is NO, case objects' class for saving are NSData
+@property (nonatomic) BOOL useArchiver;
+
+
 @property (nonatomic) BOOL cleanDiskWhenDealloc; // default is YES, if dealloc, clean data and directory
 @property (nonatomic, readonly) NSString *directoryPath; // directory's path for saving objects
 

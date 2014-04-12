@@ -49,7 +49,10 @@
 + (NSString *)diskcached_stringWithPath:(NSString *)path inUserDomainDirectory:(NSSearchPathDirectory)searchPathDirectory
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(searchPathDirectory, NSUserDomainMask, YES);
-    return [paths[0] stringByAppendingPathComponent:path];
+    if (path) {
+        return [paths[0] stringByAppendingPathComponent:path];
+    }
+    return paths[0];
 }
 
 - (NSString *)diskcached_stringByAppendingEscapesPathComponent:(NSString *)str

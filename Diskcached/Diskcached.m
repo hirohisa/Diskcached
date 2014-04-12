@@ -152,7 +152,8 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
 
 #pragma mark - default instance, singleton
 
-+ (instancetype)defaultCached {
++ (instancetype)defaultCached
+{
     static Diskcached *_defaultCached = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

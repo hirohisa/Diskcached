@@ -9,6 +9,14 @@
 #import <XCTest/XCTest.h>
 #import "Diskcached.h"
 
+// private property
+@interface Diskcached ()
+
+@property (nonatomic, strong) NSOperationQueue *operationQueue;
+
+@end
+
+
 @interface TestDiskcached : Diskcached
 @end
 
@@ -55,11 +63,11 @@
 
     NSArray *result = [cached allKeys];
 
-    XCTAssertTrue([result[0] isEqual:strings[0]],
-                  @"result[0] %@ is fail", result[0]);
+    XCTAssertTrue([result containsObject:strings[0]],
+                  @"result %@ is fail", result);
 
-    XCTAssertTrue([result[1] isEqual:strings[1]],
-                  @"result[1] %@ is fail", result[1]);
+    XCTAssertTrue([result containsObject:strings[1]],
+                  @"result %@ is fail", result);
 }
 
 - (void)testRemoveObjectForKey
@@ -162,6 +170,19 @@
 
     XCTAssertTrue([result isEqualToString:valid],
                    @"`set on async` is fail, result is %@", result);
+}
+
+- (void)testOperationDealloc
+{
+    Diskcached *cached = [[Diskcached alloc] init];
+    [cached setObject:@"test" forKey:@"key"];
+    [cached setObject:@"test2" forKey:@"key"];
+
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:5]];
+
+
+    XCTAssertTrue([cached.operationQueue.operations isEqual:@[]],
+                  @"operations stay in queue, %@", cached.operationQueue.operations);
 }
 
 // NSString Category

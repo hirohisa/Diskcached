@@ -296,18 +296,23 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
         return nil;
     }
 
-    NSMutableArray *allKeys = [@[] mutableCopy];
+    NSMutableSet *keySet = [NSMutableSet set];
+
     for (DiskcachedOperation *operation in self.operationQueue.operations) {
-        if (![operation isFinished]) {
-            NSString *rawString = [[operation.file lastPathComponent] diskcached_stringByEscapesUsingDecoding:NSUTF8StringEncoding];
-            [allKeys addObject:rawString];
+        NSString *rawString = [[operation.file lastPathComponent] diskcached_stringByEscapesUsingDecoding:NSUTF8StringEncoding];
+        if (rawString) {
+            [keySet addObject:rawString];
         }
     }
+
     for (NSString *key in result) {
         NSString *rawString = [key diskcached_stringByEscapesUsingDecoding:NSUTF8StringEncoding];
-        [allKeys addObject:rawString];
+        if (rawString) {
+            [keySet addObject:rawString];
+        }
     }
-    return [allKeys copy];
+
+    return [keySet allObjects];
 }
 
 - (void)removeObjectForKey:(NSString *)key

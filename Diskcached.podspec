@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Diskcached"
-  s.version      = "0.0.3"
+  s.version      = "0.0.4"
   s.summary      = "Diskcached."
   s.description  = <<-DESC
                     simple disk cache

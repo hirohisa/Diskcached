@@ -231,7 +231,7 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
 - (id)objectForKey:(NSString *)key
 {
     if (!key) {
-        [NSException raise:NSInvalidArgumentException format:@"%s: key is nil", __func__];
+        return nil;
     }
 
     NSString *file = [self.directoryPath diskcached_stringByAppendingEscapesPathComponent:key];
@@ -262,11 +262,11 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
 {
     if (!key ||
         !object) {
-        [NSException raise:NSInvalidArgumentException format:@"%s: object or key is nil", __func__];
+        return;
     }
     if (!self.useArchiver &&
         [(NSObject *)object isMemberOfClass:[NSData class]]) {
-        [NSException raise:NSInvalidArgumentException format:@"%s: cant write to disk", __func__];
+        return;
     }
 
     NSString *file = [self.directoryPath diskcached_stringByAppendingEscapesPathComponent:key];
@@ -318,7 +318,7 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
 - (void)removeObjectForKey:(NSString *)key
 {
     if (!key) {
-        [NSException raise:NSInvalidArgumentException format:@"%s: key is nil", __func__];
+        return;
     }
 
     NSString *file = [self.directoryPath diskcached_stringByAppendingEscapesPathComponent:key];

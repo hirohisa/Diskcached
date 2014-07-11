@@ -125,7 +125,7 @@
     NSString *directoryPath;
 
     Diskcached *cached = [[Diskcached alloc] initAtPath:@"test" inUserDomainDirectory:NSCachesDirectory];
-    cached.cleanDiskWhenDealloc = NO;
+    cached.keepData = YES;
     directoryPath = cached.directoryPath;
 
     [cached setObject:str forKey:key];

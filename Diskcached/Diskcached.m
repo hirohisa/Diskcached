@@ -205,7 +205,7 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
 - (void)diskcached_configure
 {
     // set initial properties
-    self.cleanDiskWhenDealloc   = YES;
+    self.keepData               = NO;
     self.useArchiver            = YES;
 
     // create directory
@@ -214,6 +214,12 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
     // operation queue
     self.operationQueue = [[NSOperationQueue alloc] init];
     self.operationQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
+
+    // observe
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(diskcached_terminate)
+                                                 name:UIApplicationWillTerminateNotification
+                                               object:nil];
 }
 
 - (BOOL)createDirectory
@@ -239,7 +245,14 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
 
 - (void)dealloc
 {
-    if (self.cleanDiskWhenDealloc) {
+    if (!self.keepData) {
+        [self diskcached_cleanDisk];
+    }
+}
+
+- (void)diskcached_terminate
+{
+    if (!self.keepData) {
         [self diskcached_cleanDisk];
     }
 }

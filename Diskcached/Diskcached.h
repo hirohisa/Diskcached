@@ -6,7 +6,8 @@
 //  Copyright (c) 2014年 Hirohisa Kawasaki. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+@import UIKit;
 
 @interface NSString (Encode)
 
@@ -26,8 +27,7 @@
 // if useArchiver is NO, case objects' class for saving are NSData
 @property (nonatomic) BOOL useArchiver;
 
-
-@property (nonatomic) BOOL cleanDiskWhenDealloc; // default is YES, if dealloc, clean data and directory
+@property (nonatomic) BOOL keepData; // default is NO, if dealloc or application background, clean data and directory
 @property (nonatomic, readonly) NSString *directoryPath; // directory's path for saving objects
 
 + (instancetype)defaultCached;

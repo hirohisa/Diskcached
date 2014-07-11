@@ -185,6 +185,19 @@
                   @"operations stay in queue, %@", cached.operationQueue.operations);
 }
 
+- (void)testPerformance
+{
+    // write performance test, dont use XCTest
+
+    Diskcached *cached = [[Diskcached alloc] init];
+
+    for (int i=0; i<100000; i++) {
+        NSString *string = [[NSNumber numberWithInt:i] stringValue];
+        [cached setObject:string forKey:string];
+    }
+
+}
+
 // NSString Category
 
 - (void)testEncodeAndDecode

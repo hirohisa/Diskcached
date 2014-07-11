@@ -75,7 +75,8 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
 @property (nonatomic) DiskcachedOperationState state;
 @property (nonatomic, readonly) NSData *data;
 @property (nonatomic, readonly) NSString *file;
-@property (nonatomic, copy) void (^completionBlock)();
+
+@property (nonatomic, strong) NSRecursiveLock *lock;
 
 @end
 
@@ -88,6 +89,7 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
         self.state = DiskcachedOperationReadyState;
         _data = data;
         _file   = file;
+        _lock = [[NSRecursiveLock alloc] init];
     }
     return self;
 }
@@ -108,27 +110,41 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
 
 - (void)start
 {
+    [self.lock lock];
+
     [self diskcached_run];
+
+    [self.lock unlock];
 }
 
 - (void)diskcached_run
 {
+    [self.lock lock];
+
     self.state = DiskcachedOperationExecutingState;
 
     [self.data writeToFile:self.file atomically:NO];
     [self finish];
+
+    [self.lock unlock];
 }
 
 - (void)cancel
 {
+    [self.lock lock];
+
     [super cancel];
     [[NSFileManager defaultManager] removeItemAtPath:self.file
                                                error:NULL];
     [self finish];
+
+    [self.lock unlock];
 }
 
 - (void)finish
 {
+    [self.lock lock];
+
     _data = nil;
     _file = nil;
     self.state = DiskcachedOperationFinishedState;
@@ -136,6 +152,8 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
     if (self.completionBlock) {
         self.completionBlock();
     }
+
+    [self.lock unlock];
 }
 
 @end
@@ -238,7 +256,7 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
 
     NSData *data;
     for (DiskcachedOperation *operation in self.operationQueue.operations) {
-        if ([operation.file isEqual:file]) {
+        if ([operation.file isEqualToString:file]) {
             data = operation.data;
         }
     }
@@ -278,7 +296,8 @@ typedef NS_ENUM(NSInteger, DiskcachedOperationState) {
     }
 
     for (DiskcachedOperation *operation in self.operationQueue.operations) {
-        if ([operation.file isEqualToString:file]) {
+        if (!operation.isFinished &&
+            [operation.file isEqualToString:file]) {
             [operation cancel];
         }
     }

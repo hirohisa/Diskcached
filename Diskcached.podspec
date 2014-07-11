@@ -1,6 +1,8 @@
 Pod::Spec.new do |s|
+
+  s.platform     = :ios, '5,0'
   s.name         = "Diskcached"
-  s.version      = "0.0.5"
+  s.version      = "0.1.0"
   s.summary      = "Diskcached."
   s.description  = <<-DESC
                     simple disk cache
@@ -15,8 +17,10 @@ Pod::Spec.new do |s|
                     }
   s.source       =  {
                       :git => "https://github.com/hirohisa/Diskcached.git",
-                      :tag => "#{s.version}"
+                      :tag => s.version
                     }
   s.source_files = 'Diskcached/*.{h,m}'
   s.requires_arc = true
+  s.framework    = 'UIKit'
+
 end

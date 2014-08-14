@@ -1,12 +1,10 @@
 Pod::Spec.new do |s|
 
-  s.platform     = :ios, '5,0'
+  s.platform     = :ios
   s.name         = "Diskcached"
-  s.version      = "0.1.0"
+  s.version      = "0.1.1"
   s.summary      = "Diskcached."
-  s.description  = <<-DESC
-                    simple disk cache
-                   DESC
+  s.description  = "simple disk cache"
   s.homepage     = "https://github.com/hirohisa/Diskcached"
   s.license      =  {
                       :type => 'MIT',

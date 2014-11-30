@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 Hirohisa Kawasaki. All rights reserved.
 //
 
-@import Foundation;
-@import UIKit;
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface NSString (Encode)
 

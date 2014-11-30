@@ -19,6 +19,6 @@ Pod::Spec.new do |s|
                     }
   s.source_files = 'Diskcached/*.{h,m}'
   s.requires_arc = true
-  s.framework    = 'UIKit'
+  s.frameworks    = 'UIKit', 'Foundation'
 
 end
